@@ -1307,4 +1307,9 @@ Please submit bug reports, contribute new features and ask questions at
     <string name="encrypted_subject">"Encrypted Message"</string>
     <string name="account_settings_crypto_encrypt_subject">Encrypt message subjects</string>
     <string name="account_settings_crypto_encrypt_subject_subtitle">May not be supported by some recipients</string>
+
+    <string name="account_settings_crypto_encrypt_all_drafts">Store all drafts encrypted</string>
+    <string name="account_settings_crypto_encrypt_all_drafts_on">All drafts will be stored encrypted</string>
+    <string name="account_settings_crypto_encrypt_all_drafts_off">Encrypt drafts only if encryption is enabled</string>
+
 </resources>
