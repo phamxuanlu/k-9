@@ -1,6 +1,7 @@
 package com.fsck.k9
 
 import android.app.Application
+import com.fsck.k9.activity.compose.composeModule
 import com.fsck.k9.controller.MessagingController
 import com.fsck.k9.ui.settings.settingsUiModule
 import com.fsck.k9.widget.unread.unreadWidgetModule
@@ -22,7 +23,8 @@ object DI {
     val appModules = listOf(
         mainModule,
         settingsUiModule,
-        unreadWidgetModule
+        unreadWidgetModule,
+        composeModule
     )
 
     @JvmStatic fun start(application: Application) {

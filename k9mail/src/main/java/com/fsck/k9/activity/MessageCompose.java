@@ -45,6 +45,7 @@ import android.widget.Toast;
 
 import com.fsck.k9.Account;
 import com.fsck.k9.Account.MessageFormat;
+import com.fsck.k9.DI;
 import com.fsck.k9.Identity;
 import com.fsck.k9.K9;
 import com.fsck.k9.Preferences;
@@ -64,6 +65,7 @@ import com.fsck.k9.activity.compose.RecipientMvpView;
 import com.fsck.k9.activity.compose.RecipientPresenter;
 import com.fsck.k9.activity.compose.SaveMessageTask;
 import com.fsck.k9.activity.misc.Attachment;
+import com.fsck.k9.autocrypt.AutocryptDraftStateHeaderParser;
 import com.fsck.k9.controller.MessagingController;
 import com.fsck.k9.controller.MessagingListener;
 import com.fsck.k9.controller.SimpleMessagingListener;
@@ -286,7 +288,8 @@ public class MessageCompose extends K9Activity implements OnClickListener,
         OpenPgpApiManager openPgpApiManager = new OpenPgpApiManager(getApplicationContext(), getLifecycle());
         recipientPresenter = new RecipientPresenter(getApplicationContext(), getLoaderManager(), openPgpApiManager,
                 recipientMvpView, account, composePgpInlineDecider, composePgpEnableByDefaultDecider,
-                AutocryptStatusInteractor.getInstance(), new ReplyToParser(), this
+                AutocryptStatusInteractor.getInstance(), new ReplyToParser(), this,
+                DI.get(AutocryptDraftStateHeaderParser.class)
         );
         recipientPresenter.asyncUpdateCryptoStatus();
 
@@ -1309,7 +1312,7 @@ public class MessageCompose extends K9Activity implements OnClickListener,
         draftId = MessagingController.getInstance(getApplication()).getId(message);
         subjectView.setText(messageViewInfo.subject);
 
-        recipientPresenter.initFromDraftMessage(message);
+        recipientPresenter.initFromDraftMessage(message, messageViewInfo.rootPart);
 
         // Read In-Reply-To header from draft
         final String[] inReplyTo = message.getHeader("In-Reply-To");
