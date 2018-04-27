@@ -168,7 +168,6 @@ public class PgpMessageBuilder extends MessageBuilder {
 
                 boolean payloadSupportsMimeHeaders = !isPgpInlineMode;
                 if (payloadSupportsMimeHeaders) {
-                    moveDraftStateIntoEncryptedPayload();
                     if (cryptoStatus.isEncryptSubject()) {
                         moveSubjectIntoEncryptedPayload();
                     }
@@ -218,14 +217,6 @@ public class PgpMessageBuilder extends MessageBuilder {
             String replacementSubject =
                     context.getString(isDraft() ? R.string.encrypted_subject_draft : R.string.encrypted_subject);
             currentProcessedMimeMessage.setHeader(MimeHeader.SUBJECT, replacementSubject);
-        }
-    }
-
-    private void moveDraftStateIntoEncryptedPayload() {
-        String[] autocryptDraftState = currentProcessedMimeMessage.getHeader(AutocryptDraftStateHeader.AUTOCRYPT_DRAFT_STATE_HEADER);
-        if (autocryptDraftState.length == 1) {
-            messageContentBodyPart.setHeader(AutocryptDraftStateHeader.AUTOCRYPT_DRAFT_STATE_HEADER, autocryptDraftState[0]);
-            currentProcessedMimeMessage.removeHeader(AutocryptDraftStateHeader.AUTOCRYPT_DRAFT_STATE_HEADER);
         }
     }
 
