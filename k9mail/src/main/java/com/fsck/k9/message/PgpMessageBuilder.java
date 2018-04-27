@@ -215,7 +215,9 @@ public class PgpMessageBuilder extends MessageBuilder {
             messageContentBodyPart.setHeader(MimeHeader.HEADER_CONTENT_TYPE,
                     messageContentBodyPart.getContentType() + "; protected-headers=\"v1\"");
             messageContentBodyPart.setHeader(MimeHeader.SUBJECT, subjects[0]);
-            currentProcessedMimeMessage.setHeader(MimeHeader.SUBJECT, context.getString(R.string.encrypted_subject));
+            String replacementSubject =
+                    context.getString(isDraft() ? R.string.encrypted_subject_draft : R.string.encrypted_subject);
+            currentProcessedMimeMessage.setHeader(MimeHeader.SUBJECT, replacementSubject);
         }
     }
 
